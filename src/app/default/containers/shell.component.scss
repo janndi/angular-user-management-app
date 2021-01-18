@@ -1,0 +1,106 @@
+.sidebar-footer {
+  padding-bottom: 10px;
+  bottom: 0;
+  position: absolute;
+  width: 256px;
+}
+
+.ant-menu-inline {
+  border: 0;
+}
+
+.ant-menu-vertical {
+  border: 0;
+}
+
+.sidebar-logo {
+  position: relative;
+  padding-top: 18px;
+  padding-left: 24px;
+  overflow: hidden;
+  line-height: 52px;
+  transition: all 0.3s;
+  text-align: left;
+}
+
+.logo-size {
+  width: 150px;
+}
+
+.logo-size-minimized {
+  width: 50px;
+  height: 50px;
+}
+
+.sidebar-logo-minimized {
+  position: relative;
+  padding-left: 13px;
+  overflow: hidden;
+  line-height: 100px;
+  transition: all 0.3s;
+}
+
+.sidebar-logo img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.sidebar {
+  padding-top: 24px;
+  color: #595959;
+}
+
+.sidebar-color {
+  height: 100%;
+  opacity: 0.95;
+}
+
+.upload-icon {
+  font-size: 100px;
+  color: #fff;
+}
+
+.upload-icon {
+  font-size: 50px;
+  color: #fff;
+}
+
+.ant-menu-inline > .ant-menu-item {
+  height: 32px;
+}
+
+.ant-menu-vertical .ant-menu-submenu {
+  color: #595959;
+}
+
+.ant-layout-sider {
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.09);
+  z-index: 1;
+}
+
+.ant-menu {
+  color: #595959;
+}
+
+.logo-btn {
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  background-image: none;
+  border: 0px solid transparent;
+  box-shadow: 0 0px 0 rgba(0, 0, 0, 0.015);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  user-select: none;
+  touch-action: manipulation;
+  height: 32px;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.65);
+  background-color: #fff;
+  border-color: #d9d9d9;
+}

@@ -1,0 +1,132 @@
+<infivex-header
+  [pageTitle]="i18n.t(TRANS.users.userList)"
+  [titleOnly]="true"
+  (close)="close()"
+></infivex-header>
+
+<nz-content>
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      {{ i18n.t(TRANS.sidebar.maintenance) }}
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      {{ i18n.t(TRANS.users.userList) }}
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <br />
+
+  <nz-skeleton
+    [nzLoading]="loading$ | async"
+    [nzActive]="true"
+    [nzParagraph]="{ rows: 6 }"
+  >
+    <nz-card [nzBordered]="false">
+      <!-- PAGE BUTTONS -->
+      <div nz-row>
+        <div nz-col [nzSpan]="24">
+          <nz-page-header-extra>
+            <button nz-button nzType="primary" (click)="refresh()">
+              {{ i18n.t(TRANS.general.refresh) }}
+            </button>
+            <button nz-button nzType="primary" (click)="create()">
+              {{ i18n.t(TRANS.general.new) }}
+            </button>
+            <button
+              nz-button
+              nzType="primary"
+              (click)="edit()"
+              [disabled]="!hasSelectedId()"
+            >
+              {{ i18n.t(TRANS.general.edit) }}
+            </button>
+            <button
+              nz-button
+              nzType="primary"
+              [disabled]="!hasSelectedId() && (me$ | async)?.admin"
+              (click)="deleteConfirm()"
+            >
+              {{ i18n.t(TRANS.general.delete) }}
+            </button>
+            <button nz-button nzType="primary" (click)="close()">
+              {{ i18n.t(TRANS.general.close) }}
+            </button>
+          </nz-page-header-extra>
+        </div>
+      </div>
+
+      <!-- PAGE LIST -->
+      <kendo-grid
+        #kendoGrid
+        [kendoGridBinding]="users$ | async"
+        [kendoGridSelectBy]="'id'"
+        [pageSize]="30"
+        [selectable]="true"
+        [filterable]="true"
+        [pageable]="pageableSettings"
+        [sortable]="true"
+        [reorderable]="true"
+        [resizable]="true"
+        [rowClass]="rowStylingCallback"
+        [selectedKeys]="idSelected"
+        (selectedKeysChange)="selectedKeysChange()"
+      >
+        <kendo-grid-column
+          field="firstName"
+          [width]="230"
+          [title]="i18n.t(TRANS.users.fullname)"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.firstName }} {{ dataItem.lastName }}
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column
+          field="email"
+          [width]="230"
+          [title]="i18n.t(TRANS.users.email)"
+        >
+        </kendo-grid-column>
+
+        <kendo-grid-column
+          field="password"
+          [width]="230"
+          type="password"
+          [title]="i18n.t(TRANS.users.password)"
+        >
+        </kendo-grid-column>
+
+        <kendo-grid-column
+          [filterable]="false"
+          [width]="100"
+          field="status"
+          [title]="i18n.t(TRANS.users.locked)"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <infivex-icon-status
+              [status]="dataItem.isLocked"
+              [locked]="true"
+            ></infivex-icon-status>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column
+          [filterable]="false"
+          [width]="100"
+          field="status"
+          [title]="i18n.t(TRANS.users.status)"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <infivex-icon-status
+              [status]="dataItem.status"
+            ></infivex-icon-status>
+          </ng-template>
+        </kendo-grid-column>
+      </kendo-grid>
+    </nz-card>
+  </nz-skeleton>
+</nz-content>
+
+<infivex-user-create
+  [visible]="openCreate"
+  (closeCreate)="openCreate = $event"
+></infivex-user-create>

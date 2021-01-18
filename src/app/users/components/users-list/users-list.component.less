@@ -1,0 +1,167 @@
+@import "../../../../theme/theme.less";
+
+[nz-icon] {
+  font-size: 18px;
+}
+
+.k-grid tr.k-state-selected > td {
+  color: #595959;
+  background-color: #c8f3e6;
+}
+
+.k-grid tr.row-styling:hover {
+  background-color: #e5fbf4;
+}
+
+.k-pager-numbers .k-link {
+  color: #73bcff;
+}
+
+.k-pager-numbers .k-state-selected {
+  background-color: #73bcff;
+  color: #fff;
+}
+
+.k-pager-numbers .k-link:hover {
+  color: #73bcff;
+}
+
+.k-pager-nav:hover {
+  color: #73bcff;
+}
+
+.k-text-selection ::selection,
+.k-widget ::selection,
+.k-block ::selection,
+.k-panel ::selection {
+  background-color: #73bcff;
+}
+
+.k-grid-header {
+  color: #9ca6ae;
+  background-color: #e8ebed;
+}
+
+.k-pager-wrap {
+  color: #9ca6ae;
+  background-color: #e8ebed;
+}
+
+.k-textbox {
+  border-color: rgba(0, 0, 0, 0);
+}
+
+.k-grid thead {
+  tr:nth-child(2) {
+    background-color: #ffffff;
+  }
+}
+
+.ant-skeleton {
+  display: block !important;
+}
+
+.k-grid tr.k-alt {
+  background-color: transparent;
+}
+
+// cell border styles
+
+.k-grid {
+  max-height: 600px !important;
+  color: @text-color !important;
+}
+
+.k-grid td {
+  border-bottom: 1px solid @border-color-base;
+}
+
+// modify filter icons
+
+.k-i-filter::before {
+  content: "";
+  background: url(../../../../assets/images/filter-icon.png);
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-size: cover;
+}
+
+.k-i-filter-clear::before {
+  content: "";
+  background: url(../../../../assets/images/filter-icon-clear.png);
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-size: cover;
+}
+// end
+
+// modify footer
+
+.k-pager-wrap {
+  background-color: transparent;
+}
+
+.k-pager-numbers .k-link {
+  border-radius: 4px;
+}
+
+select {
+  border-radius: 4px;
+  border-color: @border-color-base;
+}
+// custom header styles
+
+input.k-textbox {
+  border: 1px solid @border-color-base;
+  border-radius: 4px;
+}
+
+.k-grid-header .k-header > .k-link {
+  padding: 16px 12px;
+}
+
+.k-grid thead {
+  background-color: @background-color-light;
+  color: @text-color-secondary;
+}
+
+.k-dropdown-operator .k-dropdown-wrap .k-select {
+  border-color: @border-color-base !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  padding-right: 6px;
+}
+
+.k-dropdown .k-dropdown-wrap.k-state-focused {
+  border-color: @border-color-base !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+.k-dropdown .k-dropdown-wrap {
+  border-color: @border-color-base !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+.k-filtercell .k-filtercell-operator > .k-button.k-clear-button-visible {
+  border-color: @border-color-base !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  padding-right: 6px;
+  margin-left: 4px;
+}
+
+.k-grid-header-wrap {
+  border-color: @border-color-base;
+}
+
+.k-grid-header {
+  border-color: @border-color-base;
+}

@@ -1,0 +1,43 @@
+<nz-layout class="app-layout" *ngIf="me$ | async as me">
+  <!-- Sidebar -->
+  <nz-sider
+    nzCollapsible
+    nzWidth="256px"
+    nzBreakpoint="xl"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+  >
+    <div style="background-color: #02f2c2" class="sidebar-color">
+      <ul
+        nz-menu
+        class="sidebar"
+        nzMode="inline"
+        [nzInlineCollapsed]="isCollapsed"
+      >
+        <li nz-menu-item routerLink="/users" nzMatchRouter>
+          <i nz-icon nzType="team"></i>
+          <span>{{ i18n.t(TRANS.sidebar.users) }}</span>
+        </li>
+      </ul>
+
+      <ul
+        nz-menu
+        [nzMode]="'vertical'"
+        nzMode="inline"
+        class="sidebar-footer"
+        [nzInlineCollapsed]="isCollapsed"
+      >
+        <li nz-menu-item (click)="logout()" style="padding-left: 24px">
+          <i nz-icon nzType="logout"></i>
+          <span>{{ i18n.t(TRANS.general.logout) }}</span>
+        </li>
+      </ul>
+    </div>
+  </nz-sider>
+
+  <nz-layout>
+    <router-outlet></router-outlet>
+  </nz-layout>
+</nz-layout>
+
+<infivex-loader></infivex-loader>

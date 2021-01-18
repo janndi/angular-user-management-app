@@ -3,24 +3,17 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "user-management-app": {
+    "UserManagement": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "pm",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/user-management-app",
+            "outputPath": "dist/UserManagement",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,58 +21,126 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/web.config",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
-              "src/styles.scss"
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
+              "src/theme/theme.less",
+              "src/style.less"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/theme/default"]
+            },
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "default_production": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.default.prod.ts"
+                }
+              ],
+              "stylePreprocessorOptions": {
+                "includePaths": ["src/theme/default/"]
+              },
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            },
+            "default_acc": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
+              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
+              "vendorChunk": true,
               "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.default.acc.ts"
+                }
+              ],
+              "stylePreprocessorOptions": {
+                "includePaths": ["src/theme/default/"]
+              },
+              "serviceWorker": false
+            },
+            "default_dev": {
               "budgets": [
                 {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                },
-                {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb"
                 }
-              ]
+              ],
+              "extractCss": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.default.dev.ts"
+                }
+              ],
+              "stylePreprocessorOptions": {
+                "includePaths": ["src/theme/default/"]
+              },
+              "serviceWorker": false
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "user-management-app:build"
+            "browserTarget": "UserManagement:build"
           },
           "configurations": {
-            "production": {
-              "browserTarget": "user-management-app:build:production"
+            "default_production": {
+              "browserTarget": "UserManagement:build:default_production"
+            },
+            "default_acc": {
+              "browserTarget": "UserManagement:build:default_acc"
+            },
+            "default_dev": {
+              "browserTarget": "UserManagement:build:default_dev"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "user-management-app:build"
+            "browserTarget": "UserManagement:build"
           }
         },
         "test": {
@@ -89,12 +150,13 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles.scss"
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": []
           }
@@ -107,25 +169,26 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "user-management-app:serve"
+            "devServerTarget": "UserManagement:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "user-management-app:serve:production"
+              "devServerTarget": "UserManagement:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "user-management-app"
+  "defaultProject": "UserManagement",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,0 +1,79 @@
+<nz-layout
+  class="app-layout"
+  [ngStyle]="{
+    'background-image': background,
+    'background-blend-mode': 'multiply',
+    'background-repeat': 'no-repeat',
+    'background-size': 'cover'
+  }"
+>
+  <div class="login-title-box">
+    <div class="blend">
+      <div class="inner">
+        <h1>{{ titleBoxText }}</h1>
+      </div>
+    </div>
+  </div>
+
+  <nz-card class="login-form" [nzBordered]="false">
+    <form
+      nz-form
+      (ngSubmit)="loginSubmit()"
+      [formGroup]="loginForm"
+      autocomplete="off"
+    >
+      <nz-spin
+        [nzSpinning]="loading"
+        [nzIndicator]="indicatorTemplate"
+        nzTip="Logging in"
+      >
+        <span nz-text nzType="danger" [ngStyle]="{ 'margin-bottom': '5px' }">{{
+          errorMessage
+        }}</span>
+
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="displayMessage.username">
+            <input
+              type="email"
+              nz-input
+              formControlName="username"
+              placeholder="Email"
+            />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item [ngStyle]="{ 'margin-top': '10px' }">
+          <nz-form-control [nzErrorTip]="displayMessage.password">
+            <nz-input-group [nzSuffix]="suffixTemplate">
+              <input
+                [type]="passwordVisible ? 'text' : 'password'"
+                nz-input
+                formControlName="password"
+                placeholder="Password"
+              />
+            </nz-input-group>
+          </nz-form-control>
+          <ng-template #suffixTemplate>
+            <i
+              nz-icon
+              [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisible = !passwordVisible"
+            ></i>
+          </ng-template>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <button nz-button class="login-form-button" [nzType]="'primary'">
+              LOGIN
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-spin>
+    </form>
+  </nz-card>
+
+  <ng-template #indicatorTemplate>
+    <i nz-icon nzType="loading" class="login-loading"></i>
+  </ng-template>
+</nz-layout>

@@ -1,0 +1,62 @@
+﻿<div>
+  <div nz-row class="gutter-row">
+    <div nz-col [nzSm]="12">
+      <infivex-title
+        [pageTitle]="i18n.t(TRANS.sidebar.maintenance)"
+      ></infivex-title>
+    </div>
+    <div
+      nz-col
+      [nzSm]="12"
+      style="margin-top: 24px; text-align: right; padding-right: 24px"
+      *ngIf="me$ | async as me"
+    >
+      <i nz-icon nzType="user" style="margin-right: 12px"></i>
+      {{ me.firstName }} {{ me.lastName }}
+    </div>
+  </div>
+  <nz-content>
+    <div nz-row [nzGutter]="gutter" *ngIf="me$ | async as me">
+      <div
+        nz-col
+        class="gutter-row"
+        [nzSm]="24"
+        [nzMd]="12"
+        [nzLg]="8"
+        [nzXl]="8"
+        [nzXXl]="6"
+      >
+        <nz-card
+          nzHoverable
+          class="tiles"
+          (click)="routeTo(routing.users)"
+          [nzCover]="userCoverTemplate"
+        >
+          <nz-card-meta [nzTitle]="userTemplate"></nz-card-meta>
+        </nz-card>
+      </div>
+    </div>
+
+    <!-- TEXT -->
+    <ng-template #userTemplate>
+      <label>
+        {{ i18n.t(TRANS.maintenance.createUser) }}
+        <span [ngStyle]="{ float: 'right' }">
+          <i
+            nz-icon
+            nzType="plus"
+            nzTheme="outline"
+            [ngStyle]="{ color: primary, cursor: 'pointer' }"
+          ></i
+        ></span>
+      </label>
+    </ng-template>
+
+    <!-- COVER -->
+    <ng-template #userCoverTemplate>
+      <div class="cover-images">
+        <img alt="user" class="img-size" [src]="images.user" />
+      </div>
+    </ng-template>
+  </nz-content>
+</div>

@@ -1,0 +1,35 @@
+<!-- STATUS ICON -->
+<i
+  nz-icon
+  nzType="check"
+  nzTheme="outline"
+  [ngStyle]="{ color: success }"
+  *ngIf="!locked && status"
+></i>
+
+<i
+  nz-icon
+  nzType="close"
+  nzTheme="outline"
+  [ngStyle]="{ color: error }"
+  *ngIf="!locked && !status"
+></i>
+
+<!-- LOCKED ICON -->
+<i
+  nz-icon
+  nzType="check"
+  nzTheme="outline"
+  [ngStyle]="{ color: success }"
+  *ngIf="locked && status"
+></i>
+
+<i
+  nz-icon
+  nzType="close"
+  nzTheme="outline"
+  [ngStyle]="{ color: error }"
+  *ngIf="locked && !status"
+></i>
+
+

@@ -1,0 +1,240 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./theme/theme.less";
+
+/** 
+ * Body CSS
+**/
+
+:host {
+  display: flex;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-layout {
+  height: 100vh;
+}
+
+nz-header {
+  padding: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+nz-content {
+  margin: 24px;
+}
+
+.ant-layout {
+  background-color: #f5f5f5;
+}
+
+/** 
+ * Page CSS 
+**/
+
+.inner-content {
+  font-family: Rubik;
+  padding: 25px;
+  height: 100%;
+  background: #fff;
+  box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+}
+
+.ant-page-header-heading-title,
+h4.ant-typography,
+.ant-typography h4 {
+  font-weight: 400 !important;
+}
+
+h4.ant-typography,
+.ant-typography h4 {
+  font-size: 18px;
+}
+
+.page-title {
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px; /* or 133% */
+  padding: 24px;
+  display: flex;
+}
+
+/**
+ * Table CSS
+**/
+
+.ant-table-thead > tr:first-child > th:first-child {
+  border-top-left-radius: 0px;
+}
+
+.ant-table-thead > tr:last-child > th:last-child {
+  border-top-right-radius: 0px;
+}
+
+th {
+  text-transform: uppercase;
+}
+
+/**
+ * Others CSS
+**/
+
+[nz-button] {
+  border-radius: 2px;
+  margin-bottom: 24px;
+}
+
+[nz-menu] {
+  font-family: Rubik;
+}
+
+nz-card {
+  height: auto;
+  margin-bottom: 24px !important;
+  box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+}
+
+:focus {
+  outline: 0 !important;
+}
+
+.ant-card-meta-title {
+  font-weight: 400 !important;
+  color: @text-color;
+  i {
+    color: @text-color !important;
+  }
+}
+
+/**
+ * Drawer CSS
+**/
+
+.ant-form-item-label {
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 400;
+}
+
+.ant-drawer-header {
+  border-radius: 0px !important;
+  background-color: @primary-color !important;
+  position: fixed !important;
+  width: 560px;
+  padding: 38px 24px !important;
+  z-index: 1;
+}
+
+.ant-drawer-title {
+  margin: 0 !important;
+  color: #ffffff !important;
+  font-weight: 400 !important;
+  font-size: 20px !important;
+  line-height: 22px !important;
+}
+
+.ant-form-item {
+  margin-bottom: 18px !important;
+}
+
+@media (min-width: @screen-sm) {
+  .ant-form-item {
+    margin-bottom: 0px !important;
+  }
+}
+
+/**
+ * Input CSS
+**/
+
+.ant-form-item-label > label::after {
+  content: " " !important;
+}
+
+.ant-select {
+  color: @input-color;
+}
+
+/**
+  *  Modal CSS
+**/
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 400;
+  color: @primary-color;
+  margin-bottom: 24px;
+}
+
+/** 
+  *Breadcrumb CSS
+**/
+
+.ant-breadcrumb-separator {
+  margin: 0 !important;
+}
+nz-breadcrumb-item:last-child {
+  color: #959da8 !important;
+}
+.k-pager-numbers .k-link.k-state-selected {
+  color: #fff;
+  background-color: #47d7ac;
+}
+
+/**
+  * Header CSS
+**/
+
+.ant-page-header {
+  padding: 24px 24px 12px !important;
+}
+
+/**
+  * Button Css
+**/
+
+.ant-btn {
+  border-radius: 2px;
+  box-shadow: none !important;
+}
+
+.ant-btn-primary[disabled] {
+  color: #ffffff !important;
+  background-color: lighten(@primary-color, 8%) !important;
+  border-color: lighten(@primary-color, 8%) !important;
+}
+
+/**
+  * Navigation CSS
+**/
+
+.ant-menu-submenu-popup {
+  background-color: #ffffff !important;
+  opacity: 100%;
+  .ant-menu-item {
+    color: @text-color !important;
+    &:hover {
+      color: @primary-color !important;
+    }
+  }
+}
+
+.cdk-drag-preview {
+  display: table;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.k-grid-content tr:last-child > td,
+.k-grid-content-locked tr:last-child > td {
+  /* border-bottom-width: 0; */
+  border-bottom: 1px solid #d9d9d9 !important;
+}

@@ -1,0 +1,94 @@
+@import "../../../../theme/theme.less";
+
+@media (min-width: 1265px) {
+  .ant-card {
+    width: 958px;
+  }
+}
+
+.ant-form-item-label {
+  text-align: left;
+}
+
+[nz-button] {
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+
+[nz-button]:nth-child(2) {
+  margin-right: 0;
+  margin-bottom: 12px;
+}
+
+.infiButtons {
+  padding-left: 24px;
+  padding-right: 24px;
+  width: 100%;
+}
+
+@media (min-width: @screen-sm) {
+  .infiButtons {
+    padding-left: 12px;
+    padding-right: 12px;
+    width: 85px;
+  }
+}
+
+@media (min-width: @screen-lg) {
+  .infiButtons {
+    width: 150px;
+  }
+}
+
+.infibuttonBlocks {
+  text-align: right;
+  margin-top: 30px;
+}
+
+@media (min-width: @screen-sm) {
+  .infibuttonBlocks {
+    margin-top: 0px;
+  }
+}
+
+.ant-select {
+  color: @text-color-secondary;
+}
+
+::ng-deep
+  .ant-select-selection--multiple
+  .ant-select-selection__choice__content {
+  color: @text-color-secondary;
+}
+
+::ng-deep .avatar {
+  width: 150px !important;
+  height: auto !important;
+}
+
+::ng-deep .ant-upload.ant-upload-select-picture-card > .ant-upload {
+  padding: 24px !important;
+}
+
+::ng-deep .userEdit {
+  [nz-button] {
+    margin-right: 8px;
+    margin-bottom: 12px;
+  }
+  .ant-form-item-label {
+    text-align: left;
+  }
+  .ant-upload.ant-upload-select-picture-card {
+    width: 100%;
+    background-color: #ffffff;
+  }
+  .ant-radio-button-wrapper-checked[_ngcontent-kpb-c546]:not(.ant-radio-button-wrapper-disabled)::before {
+    background-color: transparent !important;
+  }
+  .ant-radio-button-wrapper-checked[_ngcontent-npm-c546]:not(.ant-radio-button-wrapper-disabled)::before {
+    background-color: transparent !important;
+  }
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+    background-color: transparent !important;
+  }
+}

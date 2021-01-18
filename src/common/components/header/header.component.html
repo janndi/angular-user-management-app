@@ -1,0 +1,37 @@
+<nz-page-header
+  [nzBackIcon]="leftIconTemplate"
+  (nzBack)="back()"
+  [ngClass]="{ 'with-tab': tab }"
+>
+  <nz-page-header-title [ngStyle]="{ color: primary }">{{
+    pageTitle
+  }}</nz-page-header-title>
+
+  <nz-page-header-extra *ngIf="me$ | async as me">
+    <i nz-icon nzType="user" style="margin-right: 12px;"></i>
+    {{ me.firstName }} {{ me.lastName }}
+  </nz-page-header-extra>
+
+  <!-- <nz-page-header-extra *ngIf="!titleOnly">
+    <button nz-button nzType="primary" (click)="action()">
+      {{ i18n.t(TRANS.general.save) }}
+    </button>
+    <button nz-button nzType="primary" (click)="back()" nzGhost>
+      {{ i18n.t(TRANS.general.cancel) }}
+    </button>
+  </nz-page-header-extra> -->
+
+  <nz-page-header-footer *ngIf="tab">
+    <nz-tabset [nzSelectedIndex]="0">
+      <nz-tab
+        [nzTitle]="title"
+        (nzClick)="navigateTo(title)"
+        *ngFor="let title of tab"
+      ></nz-tab>
+    </nz-tabset>
+  </nz-page-header-footer>
+</nz-page-header>
+
+<ng-template #leftIconTemplate>
+  <i nz-icon nzType="left"></i>
+</ng-template>

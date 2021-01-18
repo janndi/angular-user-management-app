@@ -3,7 +3,20 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  PRODUCTION: false,
+  SITE: "Strict",
+  SECURE: false,
+  LABEL: "default",
+  ENVIRONMENT: "dev",
+  END_POINT: "https://localhost:44392/api",
+  VERSION: "v1",
+  WEBSITE_HOST: "",
+  passwordRequirements: {
+    passwordRequiredLength: 6,
+    passwordRequireDigit: false,
+    passwordRequireLowercase: false,
+    passwordRequireUppercase: false,
+  },
 };
 
 /*

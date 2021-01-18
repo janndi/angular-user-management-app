@@ -1,0 +1,68 @@
+@import "../../../../theme/theme.less";
+
+.footer {
+  text-align: right;
+}
+
+.ant-form-item-label {
+  text-align: left !important;
+}
+
+.ant-select {
+  color: @text-color-secondary;
+}
+
+::ng-deep
+  .ant-select-selection--multiple
+  .ant-select-selection__choice__content {
+  color: @text-color-secondary;
+}
+
+::ng-deep .ant-descriptions-item-content {
+  color: @input-color;
+}
+
+::ng-deep .ant-calendar-picker {
+  width: 100%;
+  display: inline-block;
+}
+
+::ng-deep .user-wizard {
+  .ant-calendar-picker {
+    width: 100%;
+    display: inline-block;
+  }
+  .ant-descriptions-item-label {
+    width: 200px !important;
+  }
+  .ant-descriptions-row > th, .ant-descriptions-row > td {
+    padding-bottom: 8px;
+  }
+  .ant-descriptions-title {
+    margin-bottom: 24px;
+    font-weight: 400;
+    font-size: 20px;
+  }
+  .ant-descriptions-item-content {
+    color: @input-color;
+  }
+  .ant-upload.ant-upload-select-picture-card {
+    width: 100%;
+    background-color: #ffffff;
+  }
+  .upload-icon {
+    font-size: 48px !important;
+    color: @primary-color !important;
+    margin-bottom: 18px !important;
+  }
+  .ant-upload.ant-upload-select-picture-card > .ant-upload {
+    padding: 24px;
+  }
+  .ant-upload-hint {
+    color: #d9d9d9;
+  }
+  .avatar {
+    width: 150px !important;
+    height: auto !important;
+  }
+}
