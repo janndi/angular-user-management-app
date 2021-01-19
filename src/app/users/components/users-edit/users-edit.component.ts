@@ -6,25 +6,20 @@ import {
   FormControl,
 } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Observable, Subscription, BehaviorSubject } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 
 import { i18n, TRANS } from "src/assets";
-import {
-  COOKIES,
-  DROPDOWN,
-  ROUTING,
-  InfivexRegex,
-} from "src/common/constants/constants";
+import { COOKIES, DROPDOWN, ROUTING } from "src/common/constants/constants";
 import { GenericValidator } from "src/common/validators/generic-validator";
 
 import { Users } from "../../users";
 import { UsersService } from "../../users.service";
 
 import { CookiesService } from "src/common/services/cookies.service";
-import { InfivexLoaderService } from "src/common/services/loader.service";
-import { InfivexNotificationService } from "src/common/services/notification.service";
-import { InfivexDropdownService } from "src/common/services/dropdown.service";
-import { isIdExist } from "src/common/utils";
+import { LoaderService } from "src/common/services/loader.service";
+import { NotificationService } from "src/common/services/notification.service";
+
+
 
 @Component({
   templateUrl: "./users-edit.component.html",
@@ -46,6 +41,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
   user: Users | null;
   userForm: FormGroup;
   requestLoading: boolean = false;
+  passwordVisible = false;
 
   private subscription: Subscription;
   private formSubscription: Subscription;
@@ -61,11 +57,22 @@ export class UsersEditComponent implements OnInit, OnDestroy {
     private router: Router,
     private userService: UsersService,
     private cookiesService: CookiesService,
-    private loader: InfivexLoaderService,
-    private notification: InfivexNotificationService,
-    private dropdown: InfivexDropdownService
+    private loader: LoaderService,
+    private notification: NotificationService
   ) {
-    this.validationMessages = {};
+    this.validationMessages = {
+      email: {
+        pattern: i18n.t(TRANS.validators.emailValid),
+        required: i18n.t(TRANS.validators.emailRequired),
+      },
+      password: {
+        pattern: i18n.t(TRANS.validators.password),
+        required: i18n.t(TRANS.validators.password),
+      },
+      firstName: {
+        required: i18n.t(TRANS.validators.firstnameRequired),
+      },
+    };
     this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
@@ -138,6 +145,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
         };
 
         this.updateUser(user);
+        this.gotoList();
       }
     }
   }
@@ -151,29 +159,6 @@ export class UsersEditComponent implements OnInit, OnDestroy {
           message: i18n.t(TRANS.users.messages.updated),
         });
         userUpdateSubscription.unsubscribe();
-      });
-  }
-
-  requestQr(e: MouseEvent): void {
-    e.preventDefault();
-    this.requestLoading = true;
-
-    this.userService
-      .requestQR(this.user.id)
-      .toPromise()
-      .then(() => {
-        this.requestLoading = false;
-        this.notification.success({
-          title: i18n.t(TRANS.notification.sucess),
-          message: `Successfully sent mail`,
-        });
-      })
-      .catch((e) => {
-        const { message } = e;
-        this.notification.error({
-          title: i18n.t(TRANS.notification.updateFail),
-          message: message,
-        });
       });
   }
 }

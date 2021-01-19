@@ -20,19 +20,20 @@ import {
 import { Observable, Subscription, Observer, BehaviorSubject } from "rxjs";
 
 import { i18n, TRANS } from "src/assets";
-import { DROPDOWN, InfivexRegex } from "src/common/constants/constants";
+import { DROPDOWN, Regex } from "src/common/constants/constants";
 import { GenericValidator } from "src/common/validators/generic-validator";
+import { isIdExist } from "src/common/utils";
 
 import { Users } from "../../users";
 import { UsersService } from "../../users.service";
 
 import { MaintenanceService } from "src/app/maintenance/maintenance.service";
-import { InfivexLoaderService } from "src/common/services/loader.service";
-import { InfivexNotificationService } from "src/common/services/notification.service";
-import { InfivexDropdownService } from "src/common/services/dropdown.service";
+import { LoaderService } from "src/common/services/loader.service";
+import { NotificationService } from "src/common/services/notification.service";
+import { DropdownService } from "src/common/services/dropdown.service";
 
 @Component({
-  selector: "infivex-user-create",
+  selector: "user-create",
   templateUrl: "./users-new.component.html",
   styleUrls: ["./users-new.component.less"],
 })
@@ -70,11 +71,23 @@ export class UsersNewComponent implements OnInit, OnDestroy, OnChanges {
     private fb: FormBuilder,
     private userService: UsersService,
     private maintenanceService: MaintenanceService,
-    private loader: InfivexLoaderService,
-    private notification: InfivexNotificationService,
-    private dropdown: InfivexDropdownService
+    private loader: LoaderService,
+    private notification: NotificationService,
+    private dropdown: DropdownService
   ) {
-    this.validationMessages = {};
+    this.validationMessages = {
+      email: {
+        pattern: i18n.t(TRANS.validators.emailValid),
+        required: i18n.t(TRANS.validators.emailRequired),
+      },
+      password: {
+        pattern: i18n.t(TRANS.validators.password),
+        required: i18n.t(TRANS.validators.password),
+      },
+      firstName: {
+        required: i18n.t(TRANS.validators.firstnameRequired),
+      },
+    };
 
     this.genericValidator = new GenericValidator(this.validationMessages);
   }
@@ -85,7 +98,11 @@ export class UsersNewComponent implements OnInit, OnDestroy, OnChanges {
     this.userForm = new FormGroup({
       firstName: new FormControl([], Validators.required),
       lastName: new FormControl(""),
-      email: new FormControl("", Validators.required),
+      email: new FormControl(
+        "",
+        [Validators.required, Validators.pattern(Regex.emailRegex)],
+        this.emailAsyncValidator
+      ),
       password: new FormControl("", Validators.required),
       status: new FormControl(""),
       admin: new FormControl(""),
@@ -202,7 +219,7 @@ export class UsersNewComponent implements OnInit, OnDestroy, OnChanges {
       let emailControl = this.userForm.get("email");
       emailControl.setValidators([
         Validators.required,
-        Validators.pattern(InfivexRegex.emailRegex),
+        Validators.pattern(Regex.emailRegex),
       ]);
       emailControl.updateValueAndValidity();
     }

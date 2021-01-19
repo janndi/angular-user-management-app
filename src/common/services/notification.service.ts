@@ -3,9 +3,9 @@ import { NzNotificationService } from "ng-zorro-antd/notification";
 import { INotification } from "../interfaces/notification.interface";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
-export class InfivexNotificationService {
+export class NotificationService {
   constructor(private notification: NzNotificationService) {}
 
   success(options?: INotification): void {

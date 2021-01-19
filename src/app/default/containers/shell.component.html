@@ -7,7 +7,31 @@
     [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null"
   >
-    <div style="background-color: #02f2c2" class="sidebar-color">
+    <div style="background-color: #ffffff" class="sidebar-color">
+      <div class="sidebar-logo" *ngIf="!isCollapsed">
+        <button type="button" (click)="open()" class="logo-btn">
+          <span>
+            <img
+              class="logo-size"
+              [src]="
+                'data:image/jpeg;base64,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'
+              "
+              alt=""
+            />
+          </span>
+        </button>
+      </div>
+
+      <div class="sidebar-logo-minimized" *ngIf="isCollapsed">
+        <img
+          class="logo-size-minimized"
+          [src]="
+            'data:image/jpeg;base64,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'
+          "
+          alt=""
+        />
+      </div>
+
       <ul
         nz-menu
         class="sidebar"
@@ -19,7 +43,6 @@
           <span>{{ i18n.t(TRANS.sidebar.users) }}</span>
         </li>
       </ul>
-
       <ul
         nz-menu
         [nzMode]="'vertical'"
@@ -40,4 +63,4 @@
   </nz-layout>
 </nz-layout>
 
-<infivex-loader></infivex-loader>
+<loader></loader>

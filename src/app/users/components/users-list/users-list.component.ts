@@ -8,7 +8,7 @@ import {
   OnChanges,
 } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { PagerSettings, RowClassArgs } from "@progress/kendo-angular-grid";
 import { NzModalRef, NzModalService } from "ng-zorro-antd/modal";
 
@@ -20,11 +20,9 @@ import { Users } from "../../users";
 import { UsersService } from "../../users.service";
 
 import { CookiesService } from "src/common/services/cookies.service";
-import { InfivexLoaderService } from "src/common/services/loader.service";
-import { InfivexNotificationService } from "src/common/services/notification.service";
+import { LoaderService } from "src/common/services/loader.service";
+import { NotificationService } from "src/common/services/notification.service";
 import { MaintenanceService } from "src/app/maintenance/maintenance.service";
-import { AuthService } from "src/app/auth/auth.service";
-import { Login } from "src/app/auth/auth";
 
 @Component({
   templateUrl: "./users-list.component.html",
@@ -48,6 +46,9 @@ export class UsersListComponent implements OnInit, OnDestroy, OnChanges {
   distinctDropdownRole: any[];
   openCreate: boolean = false;
   users: any[];
+  isAdmin: boolean;
+
+  private subscription: Subscription;
 
   pageableSettings: PagerSettings = {
     pageSizes: [30, 40, 50, 100],
@@ -60,16 +61,14 @@ export class UsersListComponent implements OnInit, OnDestroy, OnChanges {
     private userService: UsersService,
     private cookiesService: CookiesService,
     private router: Router,
-    private loader: InfivexLoaderService,
+    private loader: LoaderService,
     private maintenanceService: MaintenanceService,
-    private notification: InfivexNotificationService,
-    private modal: NzModalService,
-    private authService: AuthService
+    private notification: NotificationService,
+    private modal: NzModalService
   ) {}
 
   ngOnInit(): void {
     this.loading$ = this.loader.loading$;
-    this.me$ = this.userService.me$;
     this.users$ = this.userService.users$;
     this.openCreate = this.maintenanceService.openCreate$.getValue();
 
@@ -79,11 +78,17 @@ export class UsersListComponent implements OnInit, OnDestroy, OnChanges {
       .then((users) => {
         this.users = users;
       });
+
+    this.subscription = this.userService.me().subscribe((data) => {
+      this.isAdmin = data.admin;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {}
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   create(): void {
     this.openCreate = true;
@@ -91,10 +96,6 @@ export class UsersListComponent implements OnInit, OnDestroy, OnChanges {
 
   edit(): void {
     this.router.navigate([ROUTING.userUpdate]);
-  }
-
-  assignModules(): void {
-    this.router.navigate([ROUTING.userAssignModules]);
   }
 
   deleteConfirm(): void {
@@ -110,11 +111,11 @@ export class UsersListComponent implements OnInit, OnDestroy, OnChanges {
 
   delete() {
     this.userService
-      .deleteUser(this.idSelected)
+      .deleteUser(this.idSelected.toString())
       .toPromise()
       .then(() => {
         this.idSelected = [];
-
+        this.refresh();
         this.notification.success({
           title: i18n.t(TRANS.notification.deleted),
           message: i18n.t(TRANS.users.messages.deleted),
@@ -141,10 +142,13 @@ export class UsersListComponent implements OnInit, OnDestroy, OnChanges {
 
   selectedKeysChange() {
     this.selectedRow = getSelectedRow(this.idSelected[0], this.users);
-
     this.cookiesService.setCookie(COOKIES.userId, this.idSelected[0], {
       expires: 1,
     });
+  }
+
+  hasRights(): boolean {
+    return this.isAdmin;
   }
 
   hasSelectedId(): boolean {

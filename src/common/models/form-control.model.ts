@@ -1,6 +1,6 @@
 import { FormControl } from '@angular/forms';
 
-export class InfivexFormControlDetails {
+export class FormControlDetails {
   messageKey: string;
   getMessageInterpolationParams?: () => { [key: string]: string };
   check: (control: FormControl) => boolean;

@@ -2,13 +2,13 @@ import { Component, Input } from "@angular/core";
 import { COLORS } from "src/assets";
 
 @Component({
-  selector: "infivex-icon-status",
+  selector: "icon-status",
   templateUrl: "./icon-status.component.html",
-  styleUrls: ["./icon-status.component.css"]
+  styleUrls: ["./icon-status.component.css"],
 })
-export class InfivexIconStatusComponent {
-  @Input() status: string | number;
-  @Input() locked: boolean;
+export class IconStatusComponent {
+  @Input() status: number;
+  isDeleted: boolean;
   public primary = COLORS.primary;
   public warning = COLORS.warning;
   public success = COLORS.success;
@@ -16,5 +16,7 @@ export class InfivexIconStatusComponent {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isDeleted = this.status == 1;
+  }
 }

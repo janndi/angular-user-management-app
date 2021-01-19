@@ -9,5 +9,167 @@
   [nzKeyboard]="true"
   [nzWidth]="501"
   [nzVisible]="visible"
+  [nzTitle]="i18n.t(TRANS.users.userNew)"
+  (nzOnClose)="close()"
 >
+  <form
+    nz-form
+    (ngSubmit)="save()"
+    [formGroup]="userForm"
+    #userNewForm="ngForm"
+    autocomplete="off"
+    class="user-wizard"
+  >
+    <div nz-row [nzGutter]="gutter" *ngIf="formPage">
+      <div nz-col class="gutter-row" [nzLg]="24">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="firstName">
+            {{ i18n.t(TRANS.users.firstname) }}
+            <span nz-text nzType="danger">*</span>
+          </nz-form-label>
+          <nz-form-control
+            [nzSm]="16"
+            [nzXs]="24"
+            [nzErrorTip]="displayMessage.firstName"
+          >
+            <input nz-input id="firstName" formControlName="firstName" />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="lastname">
+            {{ i18n.t(TRANS.users.lastname) }}
+          </nz-form-label>
+          <nz-form-control
+            [nzSm]="16"
+            [nzXs]="24"
+            [nzErrorTip]="displayMessage.lastName"
+          >
+            <input nz-input id="lastname" formControlName="lastName" />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email">
+            {{ i18n.t(TRANS.users.email) }}
+            <span nz-text nzType="danger">*</span>
+          </nz-form-label>
+          <nz-form-control
+            [nzSm]="16"
+            [nzXs]="24"
+            [nzErrorTip]="
+              !emailTaken
+                ? displayMessage.email
+                : i18n.t(TRANS.users.emailTaken)
+            "
+            [nzValidatingTip]="'Validating ...'"
+            [nzHasFeedback]="feedback"
+          >
+            <input
+              (ngModelChange)="onEmailChange()"
+              nz-input
+              id="email"
+              formControlName="email"
+            />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password">
+            {{ i18n.t(TRANS.users.password) }}
+            <span nz-text nzType="danger">*</span>
+          </nz-form-label>
+          <nz-form-control
+            [nzSm]="16"
+            [nzXs]="24"
+            [nzErrorTip]="displayMessage.password"
+          >
+            <input
+              nz-input
+              id="password"
+              type="password"
+              autocomplete="off"
+              formControlName="password"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <nz-descriptions
+      [nzColumn]="1"
+      [nzColon]="false"
+      [nzTitle]="i18n.t(TRANS.general.detailsReview)"
+      *ngIf="!formPage"
+    >
+      <nz-descriptions-item
+        [nzTitle]="i18n.t(TRANS.users.fullname)"
+        [nzSpan]="1"
+        >{{ userForm.value.firstName }}
+        {{ userForm.value.lastName }}</nz-descriptions-item
+      >
+
+      <nz-descriptions-item
+        [nzTitle]="i18n.t(TRANS.users.email)"
+        [nzSpan]="1"
+        >{{ userForm.value.email }}</nz-descriptions-item
+      >
+    </nz-descriptions>
+
+    <nz-divider *ngIf="!formPage"></nz-divider>
+
+    <nz-descriptions
+      [nzColumn]="1"
+      [nzColon]="false"
+      [nzSize]="'small'"
+      *ngIf="!formPage"
+    >
+    </nz-descriptions>
+  </form>
+
+  <br />
+  <div class="footer">
+    <button
+      type="button"
+      (click)="close()"
+      class="ant-btn"
+      [disabled]="loading$ | async"
+    >
+      <span>{{ i18n.t(TRANS.general.cancel) }}</span>
+    </button>
+
+    <button
+      type="button"
+      (click)="back()"
+      class="ant-btn"
+      style="margin-left: 8px"
+      *ngIf="!formPage"
+      [disabled]="loading$ | async"
+    >
+      <span>{{ i18n.t(TRANS.general.back) }}</span>
+    </button>
+
+    <button
+      type="button"
+      (click)="next()"
+      class="ant-btn ant-btn-primary"
+      style="margin-left: 8px"
+      *ngIf="formPage"
+      [disabled]="loading$ | async"
+    >
+      <span>{{ i18n.t(TRANS.general.next) }}</span>
+    </button>
+
+    <button
+      nz-button
+      type="button"
+      (click)="save()"
+      class="ant-btn ant-btn-primary"
+      style="margin-left: 8px"
+      *ngIf="!formPage"
+      [nzLoading]="loading$ | async"
+    >
+      <span>{{ i18n.t(TRANS.general.submit) }}</span>
+    </button>
+  </div>
 </nz-drawer>

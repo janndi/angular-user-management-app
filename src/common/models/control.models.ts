@@ -1,14 +1,17 @@
-import { FormControl } from '@angular/forms';
-import { InfivexFormControlDetails } from './form-control.model';
+import { FormControl } from "@angular/forms";
+import { FormControlDetails } from "./form-control.model";
 
-export class InfivexControl extends FormControl {
-  errorChecks: Array<InfivexFormControlDetails>;
+export class Control extends FormControl {
+  errorChecks: Array<FormControlDetails>;
   controlName: string;
-  constructor(controlName = '', public _errorChecks: Array<InfivexFormControlDetails> = []) {
+  constructor(
+    controlName = "",
+    public _errorChecks: Array<FormControlDetails> = []
+  ) {
     super(
-      '',
-      _errorChecks.filter(t => !t.isAsync).map(ec => ec.validator),
-      _errorChecks.filter(t => t.isAsync).map(ec => ec.validator)
+      "",
+      _errorChecks.filter((t) => !t.isAsync).map((ec) => ec.validator),
+      _errorChecks.filter((t) => t.isAsync).map((ec) => ec.validator)
     );
     this.errorChecks = _errorChecks;
     this.controlName = controlName;

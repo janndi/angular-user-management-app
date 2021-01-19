@@ -4,15 +4,15 @@ import { i18n, TRANS } from "src/assets";
 
 import {
   FilterService,
-  BaseFilterCellComponent
+  BaseFilterCellComponent,
 } from "@progress/kendo-angular-grid";
 
 @Component({
-  selector: "infivex-dropdown-filter",
+  selector: "dropdown-filter",
   templateUrl: "./dropdown-filter.component.html",
-  styleUrls: ["./dropdown-filter.component.scss"]
+  styleUrls: ["./dropdown-filter.component.scss"],
 })
-export class InfivexDropDownListFilterComponent extends BaseFilterCellComponent {
+export class DropDownListFilterComponent extends BaseFilterCellComponent {
   public get selectedValue(): any {
     const filter = this.filterByField(this.valueField);
     return filter ? filter.value : null;
@@ -26,7 +26,7 @@ export class InfivexDropDownListFilterComponent extends BaseFilterCellComponent 
   public get defaultItem(): any {
     return {
       [this.textField]: i18n.t(TRANS.general.all),
-      [this.valueField]: null
+      [this.valueField]: null,
     };
   }
 
@@ -42,7 +42,7 @@ export class InfivexDropDownListFilterComponent extends BaseFilterCellComponent 
             // add a filter for the field with the value
             field: this.valueField,
             operator: "eq",
-            value: value
+            value: value,
           })
     ); // update the root filter
   }

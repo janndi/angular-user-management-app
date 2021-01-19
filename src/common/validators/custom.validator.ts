@@ -13,7 +13,7 @@ import { Observer, Observable } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
-export class InfivexCustomValidators {
+export class CustomValidators {
   constructor(private userService: UsersService) {}
 
   static range(min: number, max: number): ValidatorFn {

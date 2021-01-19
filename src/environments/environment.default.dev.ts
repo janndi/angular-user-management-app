@@ -1,5 +1,5 @@
 export const environment = {
-  PRODUCTION: false,
+  PRODUCTION: true,
   SITE: "Strict",
   SECURE: false,
   LABEL: "default",

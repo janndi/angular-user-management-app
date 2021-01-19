@@ -25,12 +25,14 @@ export default {
     submit: "Submit",
     confirm: "Confirm",
     all: "All",
+    detailsReview: "Details Review",
   },
   notification: {
     sucess: "Success!",
     deleted: "Deleted!",
     deleteFail: "Fail to delete",
     updateFail: "Fail to update",
+    loginFail: "Login Failed",
   },
   login: {
     titleBox: {
@@ -41,6 +43,7 @@ export default {
   validators: {
     invalidFormat: "Invalid Format",
     emailRequired: "Email is required.",
+    password: "Password is required.",
     emailValid: "Email is not valid.",
     firstnameRequired: "Firstname is required.",
     lastnameRequired: "Lastname is required.",

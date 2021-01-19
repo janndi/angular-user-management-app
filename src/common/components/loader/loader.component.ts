@@ -3,33 +3,33 @@ import {
   OnInit,
   ChangeDetectorRef,
   OnDestroy,
-  ViewChild
+  ViewChild,
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import { ILoaderState } from "../../interfaces/loader-state.interface";
-import { InfivexLoaderService } from "../../services/loader.service";
+import { LoaderService } from "../../services/loader.service";
 
 import { NgProgressRef, NgProgress } from "ngx-progressbar";
 
 @Component({
-  selector: "infivex-loader",
+  selector: "loader",
   templateUrl: "./loader.component.html",
-  styleUrls: ["./loader.component.scss"]
+  styleUrls: ["./loader.component.scss"],
 })
-export class InfivexLoaderComponent implements OnInit, OnDestroy {
+export class LoaderComponent implements OnInit, OnDestroy {
   show: boolean;
   progressRef: NgProgressRef;
 
   private subscription: Subscription;
   constructor(
-    private loaderService: InfivexLoaderService,
+    private loaderService: LoaderService,
     private cDef: ChangeDetectorRef,
     private progress: NgProgress
   ) {}
 
   ngOnInit() {
-    this.progressRef = this.progress.ref("infivexProgress");
+    this.progressRef = this.progress.ref("Progress");
 
     this.subscription = this.loaderService.loaderState.subscribe(
       (state: ILoaderState) => {

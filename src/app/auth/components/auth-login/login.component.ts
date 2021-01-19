@@ -20,9 +20,9 @@ import { GenericValidator } from "src/common/validators/generic-validator";
 import { IMAGES, i18n, TRANS, COLORS } from "src/assets";
 import { Login } from "../../auth";
 import { AuthService } from "../../auth.service";
-import { InfivexNotificationService } from "src/common/services/notification.service";
-import { InfivexLoaderService } from "src/common/services/loader.service";
-import { InfivexRegex } from "src/common/constants/constants";
+import { NotificationService } from "src/common/services/notification.service";
+import { LoaderService } from "src/common/services/loader.service";
+import { Regex } from "src/common/constants/constants";
 
 @Component({
   selector: "auth-login",
@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   isMailSent: Boolean = false;
   loginForm: FormGroup;
   resetForm: FormGroup;
-  pinForm: FormGroup;
   isForgotPassword: Boolean = false;
   passwordVisible = false;
   password: string;
@@ -60,13 +59,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   resetSubscription: Subscription;
   loginSubscription: Subscription;
-  twoFASubscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
-    private notification: InfivexNotificationService,
+    private notification: NotificationService,
     private authService: AuthService,
-    private loader: InfivexLoaderService
+    private loader: LoaderService
   ) {
     // Defines all of the validation messages for the form.
     // These could instead be retrieved from a file or database.
@@ -77,13 +75,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       },
       password: {
         required: "Password is required.",
-      },
-      email: {
-        pattern: i18n.t(TRANS.validators.emailValid),
-        required: i18n.t(TRANS.validators.emailRequired),
-      },
-      passcode: {
-        required: "Pin is required.",
       },
     };
 
@@ -98,7 +89,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.fb.group({
       username: [
         null,
-        [Validators.required, Validators.pattern(InfivexRegex.emailRegex)],
+        [Validators.required, Validators.pattern(Regex.emailRegex)],
       ],
       password: [null, [Validators.required]],
     });
@@ -106,12 +97,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.resetForm = this.fb.group({
       email: [
         null,
-        [Validators.required, Validators.pattern(InfivexRegex.emailRegex)],
+        [Validators.required, Validators.pattern(Regex.emailRegex)],
       ],
-    });
-
-    this.pinForm = this.fb.group({
-      passcode: [null, [Validators.required]],
     });
 
     // Watch for value changes
@@ -130,14 +117,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.resetForm
         ))
     );
-
-    // Watch for value changes
-    this.twoFASubscription = this.pinForm.valueChanges.subscribe(
-      () =>
-        (this.displayMessage = this.genericValidator.processMessages(
-          this.pinForm
-        ))
-    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -149,7 +128,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.resetSubscription.unsubscribe();
     this.loginSubscription.unsubscribe();
-    this.twoFASubscription.unsubscribe();
   }
 
   checkChanged(value: boolean): void {
@@ -180,25 +158,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           password: this.loginForm.value.password.trim(),
         };
         this.login.emit(login);
-      }
-    }
-  }
-
-  pinSubmit(): void {
-    for (const i in this.pinForm.controls) {
-      this.pinForm.controls[i].markAsDirty();
-      this.pinForm.controls[i].updateValueAndValidity();
-    }
-
-    if (this.pinForm.valid) {
-      if (this.pinForm.dirty) {
-        const login = {
-          username: this.loginForm.value.username.trim(),
-          password: this.loginForm.value.password.trim(),
-          passcode: this.pinForm.value.passcode.trim(),
-        };
-
-        this.pin.emit(login);
       }
     }
   }

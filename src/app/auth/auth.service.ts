@@ -11,7 +11,7 @@ import {
 } from "src/common/constants/constants";
 
 import { CookiesService } from "src/common/services/cookies.service";
-import { InfivexHttpClientService } from "src/common/services/http-client.service";
+import { HttpClientService } from "src/common/services/http-client.service";
 
 @Injectable({
   providedIn: "root",
@@ -21,7 +21,7 @@ export class AuthService {
 
   constructor(
     private cookiesService: CookiesService,
-    private infivexHttp: InfivexHttpClientService
+    private http: HttpClientService
   ) {}
 
   isLoggedIn(): boolean {
@@ -31,7 +31,7 @@ export class AuthService {
   login(login: Login): Observable<Auth | any> {
     const url = `${AUTH_ENDPOINT}/token/connect`;
 
-    return this.infivexHttp
+    return this.http
       .post(url, login, {}, { showLoader: true, localRequest: false })
       .pipe(catchError(handleError));
   }
@@ -39,7 +39,7 @@ export class AuthService {
   verify2fa(verify: any): Observable<any> {
     const url = `${ENDPOINT}/twofactor/validate-user`;
 
-    return this.infivexHttp
+    return this.http
       .post(url, verify, {}, { showLoader: true, localRequest: false })
       .pipe(catchError(handleError));
   }
@@ -48,7 +48,7 @@ export class AuthService {
     const url = `/user/reset-and-activate`;
     const headers = {};
 
-    return this.infivexHttp
+    return this.http
       .post(
         url,
         activate,
@@ -66,7 +66,7 @@ export class AuthService {
     const url = `/user/forgot-password-send-mail`;
     const headers = {};
 
-    return this.infivexHttp
+    return this.http
       .post(url, data, { headers }, { showLoader: true, localRequest: true })
       .pipe(
         map(() => data),
@@ -78,7 +78,7 @@ export class AuthService {
     const url = `/user/validate-activation-id/${id}`;
     const headers = {};
 
-    return this.infivexHttp
+    return this.http
       .get(url, { headers }, { showLoader: true, localRequest: true })
       .pipe(catchError(handleError));
   }
@@ -89,7 +89,7 @@ export class AuthService {
       refreshToken: this.cookiesService.getCookie(COOKIES.refreshToken),
     };
 
-    return this.infivexHttp
+    return this.http
       .post(url, refreshToken, {}, { showLoader: false, localRequest: false })
       .pipe(shareReplay(), catchError(handleError));
   }
@@ -100,7 +100,7 @@ export class AuthService {
       refreshToken: this.cookiesService.getCookie(COOKIES.refreshToken),
     };
 
-    return this.infivexHttp
+    return this.http
       .post(url, refreshToken, {}, { showLoader: false, localRequest: false })
       .pipe(shareReplay(), catchError(handleError));
   }

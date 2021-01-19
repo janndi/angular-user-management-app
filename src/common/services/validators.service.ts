@@ -1,20 +1,25 @@
 import { Injectable } from "@angular/core";
-import { FormControl, Validators, ValidatorFn, ValidationErrors } from "@angular/forms";
+import {
+  FormControl,
+  Validators,
+  ValidatorFn,
+  ValidationErrors,
+} from "@angular/forms";
 import { Observable, Observer } from "rxjs";
 import { debounceTime, switchMap, map, take } from "rxjs/operators";
 import { environment } from "src/environments/environment";
-import { InfivexRegex } from "../constants/constants";
+import { Regex } from "../constants/constants";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
-export class InfivexValidatorsService {
+export class ValidatorsService {
   getRequiredFieldValidator(messageKey: string) {
     return {
       messageKey: messageKey,
       check: (control: FormControl) => control.hasError("required"),
       validator: Validators.required,
-      isAsync: false
+      isAsync: false,
     };
   }
 
@@ -22,8 +27,8 @@ export class InfivexValidatorsService {
     return {
       messageKey,
       check: (control: FormControl) => control.hasError("pattern"),
-      validator: Validators.pattern(InfivexRegex.emailRegex),
-      isAsync: false
+      validator: Validators.pattern(Regex.emailRegex),
+      isAsync: false,
     };
   }
 
@@ -32,7 +37,7 @@ export class InfivexValidatorsService {
       messageKey: messageKey,
       check: (control: FormControl) => control.hasError("pattern"),
       validator: Validators.pattern("^[-+]?(0|[1-9][0-9]*)$"),
-      isAsync: false
+      isAsync: false,
     };
   }
 
@@ -43,7 +48,7 @@ export class InfivexValidatorsService {
       validator: Validators.pattern(
         "^-?\\d+(\\.\\d{1,{0}})?$".replace("{0}", decimals.toString())
       ),
-      isAsync: false
+      isAsync: false,
     };
   }
 
@@ -54,10 +59,10 @@ export class InfivexValidatorsService {
       validator: (control: FormControl) =>
         (control.value ? control.value : 0).toString().trim() == ""
           ? {
-              emptySpace: true
+              emptySpace: true,
             }
           : {},
-      isAsync: false
+      isAsync: false,
     };
   }
 
@@ -68,10 +73,10 @@ export class InfivexValidatorsService {
       validator: (control: FormControl) =>
         (control.value ? control.value : 0) < 0
           ? {
-              positiveNumbersOnly: true
+              positiveNumbersOnly: true,
             }
           : {},
-      isAsync: false
+      isAsync: false,
     };
   }
 
@@ -84,10 +89,10 @@ export class InfivexValidatorsService {
         (formControl.value ? formControl.value : "") !==
         (control.value ? control.value : "")
           ? {
-              fieldsNotMatch: true
+              fieldsNotMatch: true,
             }
           : {},
-      isAsync: false
+      isAsync: false,
     };
   }
 
@@ -116,13 +121,13 @@ export class InfivexValidatorsService {
       check: (control: FormControl) => control.hasError("minlength"),
       getMessageInterpolationParams: () => {
         return {
-          0: environment.passwordRequirements.passwordRequiredLength.toString()
+          0: environment.passwordRequirements.passwordRequiredLength.toString(),
         };
       },
       validator: Validators.minLength(
         environment.passwordRequirements.passwordRequiredLength
       ),
-      isAsync: false
+      isAsync: false,
     };
   }
 
@@ -138,7 +143,7 @@ export class InfivexValidatorsService {
             : { hasDigit: true }
           : {},
 
-      isAsync: false
+      isAsync: false,
     };
   }
 
@@ -152,7 +157,7 @@ export class InfivexValidatorsService {
             ? {}
             : { hasCapitalCase: true }
           : {},
-      isAsync: false
+      isAsync: false,
     };
   }
 
@@ -166,7 +171,7 @@ export class InfivexValidatorsService {
             ? {}
             : { hasCapitalLowerCase: true }
           : {},
-      isAsync: false
+      isAsync: false,
     };
   }
 }

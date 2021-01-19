@@ -5,9 +5,9 @@ import { RequestData } from "../models/request-data.model";
 import { finalize } from "rxjs/operators";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
-export class InfivexLoaderService {
+export class LoaderService {
   private loaderSubject: Subject<ILoaderState>;
   loading$ = new BehaviorSubject<boolean>(false);
   loaderState: Observable<ILoaderState>;
@@ -38,10 +38,10 @@ export class InfivexLoaderService {
 }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
-export class InfivexShowHideLoaderService {
-  constructor(private loaderService: InfivexLoaderService) {}
+export class ShowHideLoaderService {
+  constructor(private loaderService: LoaderService) {}
   public showLoaderAndHideOnCompletion<T>(
     observable: Observable<T>,
     requestData?: RequestData

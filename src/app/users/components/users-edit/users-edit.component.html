@@ -1,9 +1,9 @@
 <div class="userEdit">
-  <infivex-header
+  <header
     [pageTitle]="i18n.t(TRANS.users.userEdit)"
     [titleOnly]="true"
     (close)="gotoList()"
-  ></infivex-header>
+  ></header>
 
   <nz-content>
     <nz-breadcrumb>
@@ -30,9 +30,7 @@
       <nz-card [nzBordered]="false">
         <div nz-row [nzGutter]="gutter">
           <div nz-col [nzSm]="12" class="gutter-row">
-            <infivex-card-title
-              [pageTitle]="i18n.t(TRANS.users.userInfo)"
-            ></infivex-card-title>
+            <card-title [pageTitle]="i18n.t(TRANS.users.userInfo)"></card-title>
           </div>
 
           <div nz-col [nzSm]="12" class="gutter-row">
@@ -66,7 +64,11 @@
               <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="firstName">
                 {{ i18n.t(TRANS.users.firstname) }}
               </nz-form-label>
-              <nz-form-control [nzSm]="16" [nzXs]="24">
+              <nz-form-control
+                [nzSm]="16"
+                [nzXs]="24"
+                [nzErrorTip]="displayMessage.firstName"
+              >
                 <input nz-input id="firstName" formControlName="firstName" />
               </nz-form-control>
             </nz-form-item>
@@ -102,8 +104,22 @@
                 [nzXs]="24"
                 [nzErrorTip]="displayMessage.password"
               >
-                <input nz-input id="password" formControlName="password" />
+                <nz-input-group [nzSuffix]="suffixTemplate">
+                  <input
+                    nz-input
+                    id="password"
+                    [type]="passwordVisible ? 'text' : 'password'"
+                    formControlName="password"
+                  />
+                </nz-input-group>
               </nz-form-control>
+              <ng-template #suffixTemplate>
+                <i
+                  nz-icon
+                  [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                  (click)="passwordVisible = !passwordVisible"
+                ></i>
+              </ng-template>
             </nz-form-item>
           </div>
           <div nz-col [nzSm]="12" class="gutter-row">
@@ -113,8 +129,8 @@
               </nz-form-label>
               <nz-form-control [nzSm]="16" [nzXs]="24">
                 <nz-switch
-                  [nzCheckedChildren]="i18n.t(TRANS.general.active)"
-                  [nzUnCheckedChildren]="i18n.t(TRANS.general.inactive)"
+                  [nzCheckedChildren]="i18n.t(TRANS.general.yes)"
+                  [nzUnCheckedChildren]="i18n.t(TRANS.general.no)"
                   formControlName="admin"
                   id="admin"
                 ></nz-switch>

@@ -1,8 +1,8 @@
-<infivex-header
+<header
   [pageTitle]="i18n.t(TRANS.users.userList)"
   [titleOnly]="true"
   (close)="close()"
-></infivex-header>
+></header>
 
 <nz-content>
   <nz-breadcrumb>
@@ -28,7 +28,12 @@
             <button nz-button nzType="primary" (click)="refresh()">
               {{ i18n.t(TRANS.general.refresh) }}
             </button>
-            <button nz-button nzType="primary" (click)="create()">
+            <button
+              nz-button
+              nzType="primary"
+              *ngIf="hasRights()"
+              (click)="create()"
+            >
               {{ i18n.t(TRANS.general.new) }}
             </button>
             <button
@@ -42,7 +47,8 @@
             <button
               nz-button
               nzType="primary"
-              [disabled]="!hasSelectedId() && (me$ | async)?.admin"
+              *ngIf="hasRights()"
+              [disabled]="!hasSelectedId()"
               (click)="deleteConfirm()"
             >
               {{ i18n.t(TRANS.general.delete) }}
@@ -99,26 +105,10 @@
           [filterable]="false"
           [width]="100"
           field="status"
-          [title]="i18n.t(TRANS.users.locked)"
-        >
-          <ng-template kendoGridCellTemplate let-dataItem>
-            <infivex-icon-status
-              [status]="dataItem.isLocked"
-              [locked]="true"
-            ></infivex-icon-status>
-          </ng-template>
-        </kendo-grid-column>
-
-        <kendo-grid-column
-          [filterable]="false"
-          [width]="100"
-          field="status"
           [title]="i18n.t(TRANS.users.status)"
         >
           <ng-template kendoGridCellTemplate let-dataItem>
-            <infivex-icon-status
-              [status]="dataItem.status"
-            ></infivex-icon-status>
+            <icon-status [status]="dataItem.status"></icon-status>
           </ng-template>
         </kendo-grid-column>
       </kendo-grid>
@@ -126,7 +116,7 @@
   </nz-skeleton>
 </nz-content>
 
-<infivex-user-create
+<user-create
   [visible]="openCreate"
   (closeCreate)="openCreate = $event"
-></infivex-user-create>
+></user-create>

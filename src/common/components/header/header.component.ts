@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy} from "@angular/core";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy,
+} from "@angular/core";
 import { COLORS, i18n, TRANS } from "src/assets";
 import { COOKIES } from "src/common/constants/constants";
 import { Observable, interval, Subscription } from "rxjs";
@@ -10,11 +17,11 @@ import { UsersService } from "../../../app/users/users.service";
 import { AuthService } from "../../../app/auth/auth.service";
 
 @Component({
-  selector: "infivex-header",
+  selector: "header",
   templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.css"]
+  styleUrls: ["./header.component.css"],
 })
-export class InfivexHeaderComponent implements OnInit, OnDestroy  {
+export class HeaderComponent implements OnInit, OnDestroy {
   public primary = COLORS.primary;
   public i18n = i18n;
   public TRANS = TRANS;
@@ -46,16 +53,16 @@ export class InfivexHeaderComponent implements OnInit, OnDestroy  {
       this.authService
         .refresh()
         .toPromise()
-        .then(auth => {
+        .then((auth) => {
           this.cookiesService.setCookie(COOKIES.token, auth.access_Token, {
-            expires: 0.03
+            expires: 0.03,
           });
 
           this.cookiesService.setCookie(
             COOKIES.refreshToken,
             auth.refresh_Token,
             {
-              expires: 9
+              expires: 9,
             }
           );
         });

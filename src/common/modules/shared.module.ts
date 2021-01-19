@@ -5,13 +5,12 @@ import { NgZorroAntdModule } from "ng-zorro-antd";
 import { GridModule } from "@progress/kendo-angular-grid";
 import { DropDownListModule } from "@progress/kendo-angular-dropdowns";
 import { NgProgressModule } from "ngx-progressbar";
-import { InfivexHeaderComponent } from "../components/header/header.component";
-import { InfivexTitleComponent } from "../components/title/title.component";
-import { InfivexCardTitleComponent } from "../components/card-title/card-title.component";
-import { InfivexTransferComponent } from "../components/transfer/transfer.component";
-import { InfivexIconStatusComponent } from "../components/icon-status/icon-status.component";
-import { InfivexLoaderComponent } from "../components/loader/loader.component";
-import { InfivexDropDownListFilterComponent } from "../components/dropdown-filter/dropdown-filter.component";
+import { HeaderComponent } from "../components/header/header.component";
+import { TitleComponent } from "../components/title/title.component";
+import { CardTitleComponent } from "../components/card-title/card-title.component";
+import { IconStatusComponent } from "../components/icon-status/icon-status.component";
+import { LoaderComponent } from "../components/loader/loader.component";
+import { DropDownListFilterComponent } from "../components/dropdown-filter/dropdown-filter.component";
 
 import { COLORS } from "src/assets";
 
@@ -27,13 +26,12 @@ import { COLORS } from "src/assets";
     }),
   ],
   declarations: [
-    InfivexHeaderComponent,
-    InfivexTitleComponent,
-    InfivexCardTitleComponent,
-    InfivexTransferComponent,
-    InfivexIconStatusComponent,
-    InfivexLoaderComponent,
-    InfivexDropDownListFilterComponent,
+    HeaderComponent,
+    TitleComponent,
+    CardTitleComponent,
+    IconStatusComponent,
+    LoaderComponent,
+    DropDownListFilterComponent,
   ],
   exports: [
     CommonModule,
@@ -42,13 +40,12 @@ import { COLORS } from "src/assets";
     ReactiveFormsModule,
     GridModule,
     DropDownListModule,
-    InfivexHeaderComponent,
-    InfivexTitleComponent,
-    InfivexCardTitleComponent,
-    InfivexTransferComponent,
-    InfivexIconStatusComponent,
-    InfivexLoaderComponent,
-    InfivexDropDownListFilterComponent,
+    HeaderComponent,
+    TitleComponent,
+    CardTitleComponent,
+    IconStatusComponent,
+    LoaderComponent,
+    DropDownListFilterComponent,
   ],
 })
 export class SharedModule {}

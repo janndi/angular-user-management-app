@@ -3,15 +3,13 @@ import { Router } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
 
 import { Login, Auth } from "../auth";
-import {
-  COOKIES,
-  ROUTING,
-  TWO_FACTOR_AUTH,
-} from "src/common/constants/constants";
+import { COOKIES, ROUTING } from "src/common/constants/constants";
+import { i18n, TRANS } from "src/assets";
 
 import { AuthService } from "../auth.service";
 import { CookiesService } from "src/common/services/cookies.service";
-import { InfivexLoaderService } from "src/common/services/loader.service";
+import {LoaderService } from "src/common/services/loader.service";
+import { NotificationService } from "src/common/services/notification.service";
 
 @Component({
   templateUrl: "./auth-shell.component.html",
@@ -20,14 +18,17 @@ export class AuthShellComponent implements OnInit, OnDestroy {
   loading$: Observable<boolean>;
   auth$: Observable<Auth>;
   errorMessage: string;
-  is2FA: boolean = false;
+
+  public i18n = i18n;
+  public TRANS = TRANS;
 
   subscription: Subscription;
   constructor(
     private router: Router,
     private authService: AuthService,
     private cookiesService: CookiesService,
-    private loader: InfivexLoaderService
+    private loader: LoaderService,
+    private notification: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -46,11 +47,7 @@ export class AuthShellComponent implements OnInit, OnDestroy {
       .login(login)
       .toPromise()
       .then((auth) => {
-        if (auth !== TWO_FACTOR_AUTH) {
-          this.successLogin(auth);
-        } else {
-          this.is2FA = true;
-        }
+        this.successLogin(auth);
       })
       .catch((err) => {
         const { message } = err;
@@ -59,23 +56,11 @@ export class AuthShellComponent implements OnInit, OnDestroy {
           message === "Invalid username or password"
             ? "Sorry, invalid credentials."
             : message;
-      });
-  }
 
-  onPinVerify(login: any): void {
-    this.errorMessage = null;
-
-    this.authService
-      .verify2fa(login)
-      .toPromise()
-      .then((auth) => {
-        this.successLogin(auth);
-      })
-      .catch((err) => {
-        const { message } = err;
-
-        this.errorMessage =
-          message === "Invalid Pincode" ? "PIN Code Invalid" : message;
+        this.notification.error({
+          title: i18n.t(TRANS.notification.loginFail),
+          message: this.errorMessage,
+        });
       });
   }
 

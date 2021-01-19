@@ -1,9 +1,7 @@
 ﻿<div>
   <div nz-row class="gutter-row">
     <div nz-col [nzSm]="12">
-      <infivex-title
-        [pageTitle]="i18n.t(TRANS.sidebar.maintenance)"
-      ></infivex-title>
+      <title [pageTitle]="i18n.t(TRANS.sidebar.maintenance)"></title>
     </div>
     <div
       nz-col
@@ -27,6 +25,7 @@
         [nzXXl]="6"
       >
         <nz-card
+          *ngIf="(me$ | async)?.admin"
           nzHoverable
           class="tiles"
           (click)="routeTo(routing.users)"

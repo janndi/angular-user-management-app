@@ -1,9 +1,7 @@
 <auth-login
   [loading]="loading$ | async"
   [errorMessage]="errorMessage"
-  [is2FA]="is2FA"
   (login)="login($event)"
   (checked)="checkChanged($event)"
-  (pin)="onPinVerify($event)"
 >
 </auth-login>

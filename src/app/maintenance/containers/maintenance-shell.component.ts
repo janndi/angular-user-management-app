@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 
 import { COLORS, i18n, TRANS, IMAGES } from "src/assets";
 import { ROUTING } from "src/common/constants/constants";
@@ -12,7 +12,7 @@ import { MaintenanceService } from "src/app/maintenance/maintenance.service";
 
 @Component({
   templateUrl: "./maintenance-shell.component.html",
-  styleUrls: ["./maintenance-shell.component.less"]
+  styleUrls: ["./maintenance-shell.component.less"],
 })
 export class MaintenanceShellComponent implements OnInit {
   me$: Observable<Users>;
@@ -27,7 +27,7 @@ export class MaintenanceShellComponent implements OnInit {
     user: IMAGES.user,
     role: IMAGES.roles,
     tenant: IMAGES.tenant,
-    group: IMAGES.group
+    group: IMAGES.group,
   };
 
   constructor(

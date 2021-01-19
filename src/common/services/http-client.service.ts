@@ -2,17 +2,17 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { RequestData } from "../models/request-data.model";
-import { InfivexShowHideLoaderService } from "./loader.service";
+import { ShowHideLoaderService } from "./loader.service";
 import { IHttpOptions } from "../interfaces/http-options.interface";
 import { ENDPOINT } from "src/common/constants/constants";
 
 @Injectable({
   providedIn: "root",
 })
-export class InfivexHttpClientService {
+export class HttpClientService {
   constructor(
     private httpClient: HttpClient,
-    private showHideLoader: InfivexShowHideLoaderService
+    private showHideLoader: ShowHideLoaderService
   ) {}
   private createUrl(url: string, localRequest: boolean = true) {
     return localRequest ? ENDPOINT + url : url;

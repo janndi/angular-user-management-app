@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { Observable, BehaviorSubject, Subscription } from "rxjs";
+import { Observable, BehaviorSubject, Subscription, identity } from "rxjs";
 import { catchError, tap, map, shareReplay } from "rxjs/operators";
 
 import { Users } from "./users";
@@ -17,7 +17,7 @@ import {
 
 import { COOKIES } from "src/common/constants/constants";
 import { CookiesService } from "src/common/services/cookies.service";
-import { InfivexHttpClientService } from "src/common/services/http-client.service";
+import { HttpClientService } from "src/common/services/http-client.service";
 import { setAppLanguage } from "src/assets";
 
 @Injectable({
@@ -35,7 +35,7 @@ export class UsersService {
 
   constructor(
     private cookiesService: CookiesService,
-    private infivexHttp: InfivexHttpClientService
+    private http: HttpClientService
   ) {
     this.userSubscription = this._users.subscribe((users) => {
       this.users$.next(users);
@@ -55,7 +55,7 @@ export class UsersService {
       Authorization: `Bearer ${accessToken}`,
     };
 
-    return this.infivexHttp
+    return this.http
       .get(url, { headers }, { showLoader: loading, localRequest: true })
       .pipe(
         map((users) => mapUsers(users)),
@@ -66,18 +66,14 @@ export class UsersService {
   }
 
   validateEmail(email: string) {
-    const url = `/user/validate-email`;
+    const url = `/user/validate-email?email=${email}`;
     const accessToken = this.cookiesService.getCookie(COOKIES.token);
     const headers = {
       Authorization: `Bearer ${accessToken}`,
     };
 
-    const payload = {
-      email: `${email}`,
-    };
-
-    return this.infivexHttp
-      .post(url, payload, { headers }, { showLoader: true, localRequest: true })
+    return this.http
+      .post(url, {}, { headers }, { showLoader: true, localRequest: true })
       .pipe(
         map((res) => res),
         shareReplay(),
@@ -93,7 +89,7 @@ export class UsersService {
       Authorization: `Bearer ${accessToken}`,
     };
 
-    return this.infivexHttp
+    return this.http
       .get(url, { headers }, { showLoader: true, localRequest: true })
       .pipe(
         map((user) => mapUser(user)),
@@ -121,11 +117,14 @@ export class UsersService {
       Authorization: `Bearer ${accessToken}`,
     };
 
-    return this.infivexHttp
+    return this.http
       .post(url, user, { headers }, { showLoader: true, localRequest: true })
       .pipe(
         map((user) => mapUser(user)),
-        tap((data) => (this.users = singlePushInArray(this.users, data))),
+        tap((data) => {
+          data.password = "**********";
+          this.users = singlePushInArray(this.users, data);
+        }),
         tap(() => this.users$.next(this.users)),
         shareReplay(),
         catchError(handleError)
@@ -139,33 +138,36 @@ export class UsersService {
       Authorization: `Bearer ${accessToken}`,
     };
 
-    return this.infivexHttp
+    return this.http
       .put(url, user, { headers }, { showLoader: true, localRequest: true })
       .pipe(
         map((user) => mapUser(user)),
-        tap((user) => (this.users = singleReplaceInArray(this.users, user))),
+        tap((user) => {
+          user.password = "**********";
+          this.users = singleReplaceInArray(this.users, user);
+        }),
         tap(() => this.users$.next(this.users)),
         shareReplay(),
         catchError(handleError)
       );
   }
 
-  deleteUser(id: string[]): Observable<{}> {
-    const url = `/user/delete-multiple`;
+  deleteUser(ids: string): Observable<{}> {
+    let url = `/user/delete-multiple?ids=${ids}`;
+
     const accessToken = this.cookiesService.getCookie(COOKIES.token);
     const headers = {
       Authorization: `Bearer ${accessToken}`,
     };
 
-    return this.infivexHttp
+    return this.http
       .batchDelete(
         url,
-        id,
+        [],
         { headers },
         { showLoader: true, localRequest: true }
       )
       .pipe(
-        tap(() => (this.users = multipleRemoveArray(this.users, id))),
         tap(() => this.users$.next(this.users)),
         shareReplay(),
         catchError(handleError)
@@ -180,7 +182,7 @@ export class UsersService {
       Authorization: `Bearer ${accessToken}`,
     };
 
-    return this.infivexHttp
+    return this.http
       .get(url, { headers }, { showLoader: true, localRequest: true })
       .pipe(
         map((user) => mapMe(user)),
@@ -199,7 +201,7 @@ export class UsersService {
       Authorization: `Bearer ${accessToken}`,
     };
 
-    return this.infivexHttp
+    return this.http
       .post(
         url,
         { userId: id },
